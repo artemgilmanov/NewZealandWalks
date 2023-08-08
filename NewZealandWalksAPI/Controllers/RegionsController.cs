@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NewZealandWalksAPI.Data;
 using NewZealandWalksAPI.Models.Domain;
 using NewZealandWalksAPI.Models.DTO;
 using NewZealandWalksAPI.Repositories;
+using System.Collections.Generic;
 
 namespace NewZealandWalksAPI.Controllers
 {
@@ -14,11 +16,14 @@ namespace NewZealandWalksAPI.Controllers
     {
         private readonly NZWalksDbContext dbContext;
         private readonly IRegionRepository regionRepository;
+        private readonly IMapper mapper;
 
-        public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository)
+        public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository,
+            IMapper mapper)
         {
             this.dbContext = dbContext;
             this.regionRepository = regionRepository;
+            this.mapper = mapper;
         }
         // GET ALL REGIONS
         // GET:https://localhost:portnumber/api/regionsDomain
@@ -29,17 +34,20 @@ namespace NewZealandWalksAPI.Controllers
             var regionsDomain = await regionRepository.GetAllAsync();
 
             // Map Domain Models to DTOs
-            var regionsDTO = new List<RegionDto>();
-            foreach (var regionDomain in regionsDomain) 
-            {
-                regionsDTO.Add(new RegionDto()
-                {
-                    Id= regionDomain.Id,
-                    Code = regionDomain.Code,
-                    Name = regionDomain.Name,
-                    RegionImageUrl= regionDomain.RegionImageUrl
-                });
-            }
+            //var regionsDTO = new List<RegionDto>();
+            //foreach (var regionDomain in regionsDomain) 
+            //{
+            //    regionsDTO.Add(new RegionDto()
+            //    {
+            //        Id= regionDomain.Id,
+            //        Code = regionDomain.Code,
+            //        Name = regionDomain.Name,
+            //        RegionImageUrl= regionDomain.RegionImageUrl
+            //    });
+            //}
+
+            // Map Domain Models to DTOs
+            var regionsDTO = mapper.Map<List<RegionDto>>(regionsDomain);
 
             // Return DTOs back to Client
             return Ok(regionsDTO);
