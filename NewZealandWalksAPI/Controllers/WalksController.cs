@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using NewZealandWalksAPI.CustomActionFilters;
 using NewZealandWalksAPI.Models.Domain;
 using NewZealandWalksAPI.Models.DTO;
 using NewZealandWalksAPI.Repositories;
@@ -22,6 +23,7 @@ namespace NewZealandWalksAPI.Controllers
         // Create walk
         // POST: /api/walks
         [HttpPost]
+        [ValidateModel]
         public async Task<IActionResult> Create([FromBody] AddWalkRequestDto addWalkRequestDto)
         {
             // Map DTO to DomainModel
@@ -31,7 +33,6 @@ namespace NewZealandWalksAPI.Controllers
 
             // Map Domain model to DTO
             return Ok(mapper.Map<WalkDto>(walkDomainlModel));
-
         }
 
         // Get Walks
@@ -65,12 +66,13 @@ namespace NewZealandWalksAPI.Controllers
         // PUT: /api/Walks/{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [ValidateModel]
         public async Task<IActionResult> Update([FromRoute] Guid id, UpdateWalkRequestDto updateWalkRequestDto)
         {
             // Map DTO to Domain Model
             var walkDomainModel = mapper.Map<Walk>(updateWalkRequestDto);
 
-            walkDomainModel= await walkRepositiory.UpdateAsync(id, walkDomainModel);
+            walkDomainModel = await walkRepositiory.UpdateAsync(id, walkDomainModel);
 
             if (walkDomainModel == null)
             {
@@ -79,6 +81,7 @@ namespace NewZealandWalksAPI.Controllers
 
             // Map Domain Model to DTO
             return Ok(mapper.Map<WalkDto>(walkDomainModel));
+            
         }
 
         // Delete a walk by id
