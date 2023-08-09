@@ -7,7 +7,7 @@ namespace NewZealandWalksAPI.CustomActionFilters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if(context.ModelState.IsValid == false)
+            if (context.ModelState.IsValid == false)
             {
                 context.Result = new BadRequestResult();
             }
