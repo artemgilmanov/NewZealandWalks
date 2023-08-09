@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewZealandWalksAPI.Models.Domain;
 using NewZealandWalksAPI.Models.DTO;
