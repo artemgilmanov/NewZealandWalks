@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NewZealandWalksAPI.Models.Domain;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NewZealandWalksAPI.Data
 {
