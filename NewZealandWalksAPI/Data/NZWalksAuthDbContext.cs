@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace NewZealandWalksAPI.Data
 {
-    public class NZWalksAuthDbContext : IdentityDbContext<IdentityUser, IdentityRole>
+    public class NZWalksAuthDbContext : IdentityDbContext
     {
         public NZWalksAuthDbContext(DbContextOptions<NZWalksAuthDbContext> options) : base(options)
         {
