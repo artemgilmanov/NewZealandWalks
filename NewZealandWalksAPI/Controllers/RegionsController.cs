@@ -33,11 +33,13 @@ namespace NewZealandWalksAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            // Loggind different levels
-            //logger.LogInformation("GetAllRegions Action Mehtod was invoked.");
-            //logger.LogWarning("This is a warning log.");
-            //logger.LogError("This is a error log.");
+            /* Loggind different levels
+             *  logger.LogInformation("GetAllRegions Action Mehtod was invoked.");
+             *  logger.LogWarning("This is a warning log.");
+             *  logger.LogError("This is a error log.");
+             */
 
+            /* Logging an Exception
             try
             {
                 throw new Exception("This is a custom exception.");
@@ -54,9 +56,17 @@ namespace NewZealandWalksAPI.Controllers
             {
                 logger.LogError(ex, ex.Message);
                 throw;
-            }
+            }*/
 
-            
+            //Get Data From Database - Domain Models
+            var regionsDomain = await regionRepository.GetAllAsync();
+
+            //logger.LogInformation($"Finished GetAllRegions request with data: {JsonSerializer.Serialize(regionsDomain)}");
+
+            // Return DTOs back to Client
+            return Ok(mapper.Map<List<RegionDto>>(regionsDomain));
+
+
         }
 
         // GET SINGLE REGION (Get Region By Id)
