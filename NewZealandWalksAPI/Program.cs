@@ -10,11 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 var logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .MinimumLevel.Information()
-    .CreateLogger();
+        //.MinimumLevel.Information()
+        .MinimumLevel.Warning()
+        .CreateLogger();
 
 builder.Logging.ClearProviders();
-builder.Logging.AddSerilog();
+builder.Logging.AddSerilog(logger);
 
 
 builder.Services.AddControllers();
