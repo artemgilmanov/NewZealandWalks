@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using NewZealandWalksAPI.CustomActionFilters;
 using NewZealandWalksAPI.Data;
 using NewZealandWalksAPI.Models.Domain;
 using NewZealandWalksAPI.Models.DTO;
 using NewZealandWalksAPI.Repositories;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace NewZealandWalksAPI.Controllers
@@ -35,7 +33,7 @@ namespace NewZealandWalksAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            logger.LogInformation("GetAll Action Mehtod was invoked");
+            logger.LogInformation("GetAllRegions Action Mehtod was invoked");
 
             //Get Data From Database - Domain Models
             var regionsDomain = await regionRepository.GetAllAsync();
