@@ -2,8 +2,17 @@ using Microsoft.EntityFrameworkCore;
 using NewZealandWalksAPI.Data;
 using NewZealandWalksAPI.Mappings;
 using NewZealandWalksAPI.Repositories;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .MinimumLevel.Information()
+    .CreateLogger();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog();
 
 // Add services to the container.
 
