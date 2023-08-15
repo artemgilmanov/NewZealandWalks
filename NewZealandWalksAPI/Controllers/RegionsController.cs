@@ -38,6 +38,16 @@ namespace NewZealandWalksAPI.Controllers
             return Ok(mapper.Map<List<RegionDto>>(regionsDomain));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllV2()
+        {
+            //Get Data From Database - Domain Models
+            var regionsDomain = await regionRepository.GetAllAsync();
+
+            // Return DTOs back to Client
+            return Ok(mapper.Map<List<RegionDtoV2>>(regionsDomain));
+        }
+
         // GET SINGLE REGION (Get Region By Id)
         // GET:https://localhost:portnumber/api/regionsDomain/{id}
         [HttpGet]
