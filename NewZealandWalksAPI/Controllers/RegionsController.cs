@@ -6,6 +6,7 @@ using NewZealandWalksAPI.Data;
 using NewZealandWalksAPI.Models.Domain;
 using NewZealandWalksAPI.Models.DTO;
 using NewZealandWalksAPI.Repositories;
+using System.Text.Json;
 
 namespace NewZealandWalksAPI.Controllers
 {
