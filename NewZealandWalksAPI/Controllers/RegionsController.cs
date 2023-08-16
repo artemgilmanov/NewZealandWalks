@@ -11,8 +11,11 @@ using System.Collections.Generic;
 namespace NewZealandWalksAPI.Controllers
 {
     // https://localhost:123/api/regionsDomain
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+
     public class RegionsController : ControllerBase
     {
         private readonly NZWalksDbContext dbContext;
@@ -28,6 +31,7 @@ namespace NewZealandWalksAPI.Controllers
         }
         // GET ALL REGIONS
         // GET:https://localhost:portnumber/api/regionsDomain
+        [MapToApiVersion("1.0")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -38,6 +42,7 @@ namespace NewZealandWalksAPI.Controllers
             return Ok(mapper.Map<List<RegionDto>>(regionsDomain));
         }
 
+        [MapToApiVersion("2.0")]
         [HttpGet]
         public async Task<IActionResult> GetAllV2()
         {
