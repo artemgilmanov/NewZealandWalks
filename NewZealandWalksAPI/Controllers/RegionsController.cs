@@ -18,13 +18,16 @@ namespace NewZealandWalksAPI.Controllers
         private readonly NZWalksDbContext dbContext;
         private readonly IRegionRepository regionRepository;
         private readonly IMapper mapper;
+        private readonly ILogger<RegionsController> logger;
 
         public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository,
-            IMapper mapper)
+            IMapper mapper,
+            ILogger<RegionsController> logger)
         {
             this.dbContext = dbContext;
             this.regionRepository = regionRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
         // GET ALL REGIONS
         // GET:https://localhost:portnumber/api/regionsDomain
@@ -32,11 +35,42 @@ namespace NewZealandWalksAPI.Controllers
         [Authorize(Roles = "Writer, Reader")]
         public async Task<IActionResult> GetAll()
         {
+            /* Loggind different levels
+             *  logger.LogInformation("GetAllRegions Action Mehtod was invoked.");
+             *  logger.LogWarning("This is a warning log.");
+             *  logger.LogError("This is a error log.");
+             */
+
+            ///* Logging an Exception
+            try
+            {
+                throw new Exception("This is a custom exception.");
+
+                //Get Data From Database - Domain Models
+                var regionsDomain = await regionRepository.GetAllAsync();
+
+                logger.LogInformation($"Finished GetAllRegions request with data: {JsonSerializer.Serialize(regionsDomain)}");
+
+                // Return DTOs back to Client
+                return Ok(mapper.Map<List<RegionDto>>(regionsDomain));
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, ex.Message);
+                throw;
+            }
+            //*/
+
+            /*
             //Get Data From Database - Domain Models
             var regionsDomain = await regionRepository.GetAllAsync();
 
+            //logger.LogInformation($"Finished GetAllRegions request with data: {JsonSerializer.Serialize(regionsDomain)}");
+
             // Return DTOs back to Client
             return Ok(mapper.Map<List<RegionDto>>(regionsDomain));
+            */
+
         }
 
         // GET SINGLE REGION (Get Region By Id)
