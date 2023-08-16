@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NewZealandWalksAPI.Data;
 using NewZealandWalksAPI.Mappings;
+using NewZealandWalksAPI.Middlewares;
 using NewZealandWalksAPI.Repositories;
 using Serilog;
 
@@ -10,9 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 var logger = new LoggerConfiguration()
     .WriteTo.Console()
-        //.MinimumLevel.Information()
-        .MinimumLevel.Warning()
-        .CreateLogger();
+    .WriteTo.File("Logs/NzWalks_Log.txt", rollingInterval: RollingInterval.Day)
+    //.MinimumLevel.Information()
+    .MinimumLevel.Warning()
+    .CreateLogger();
 
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
@@ -40,6 +42,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 app.UseHttpsRedirection();
 

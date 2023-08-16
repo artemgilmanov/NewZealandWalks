@@ -39,7 +39,7 @@ namespace NewZealandWalksAPI.Controllers
              *  logger.LogError("This is a error log.");
              */
 
-            /* Logging an Exception
+            ///* Logging an Exception
             try
             {
                 throw new Exception("This is a custom exception.");
@@ -56,8 +56,10 @@ namespace NewZealandWalksAPI.Controllers
             {
                 logger.LogError(ex, ex.Message);
                 throw;
-            }*/
+            }
+            //*/
 
+            /*
             //Get Data From Database - Domain Models
             var regionsDomain = await regionRepository.GetAllAsync();
 
@@ -65,7 +67,7 @@ namespace NewZealandWalksAPI.Controllers
 
             // Return DTOs back to Client
             return Ok(mapper.Map<List<RegionDto>>(regionsDomain));
-
+            */
 
         }
 

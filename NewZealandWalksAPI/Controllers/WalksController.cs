@@ -46,6 +46,9 @@ namespace NewZealandWalksAPI.Controllers
                 sortBy, isAscending ?? true,
                 pageNumber, pageSize);
 
+            // Create an exseption
+            throw new Exception("This is a new exception.");
+
             // Map Domain Model to DTO
             return Ok(mapper.Map<List<WalkDto>>(walksDomainModel)) ;
         }
