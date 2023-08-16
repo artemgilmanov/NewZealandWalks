@@ -71,7 +71,7 @@ namespace NewZealandWalksAPI.Controllers
 
                         var responce = new LoginResponseDto
                         {
-                            JwtToken = jwtToken,
+                            JwtToken = jwtToken
                         };
 
                         return Ok(responce);
