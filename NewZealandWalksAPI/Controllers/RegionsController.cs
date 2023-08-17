@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NewZealandWalksAPI.CustomActionFilters;
 using NewZealandWalksAPI.Data;
@@ -10,7 +9,7 @@ using System.Text.Json;
 
 namespace NewZealandWalksAPI.Controllers
 {
-    // https://localhost:123/api/regionsDomain
+    // https://localhost:123/api/regions
     [Route("api/[controller]")]
     [ApiController]
     //[Authorize]
@@ -21,7 +20,8 @@ namespace NewZealandWalksAPI.Controllers
         private readonly IMapper mapper;
         private readonly ILogger<RegionsController> logger;
 
-        public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository,
+        public RegionsController(NZWalksDbContext dbContext,
+            IRegionRepository regionRepository,
             IMapper mapper,
             ILogger<RegionsController> logger)
         {
@@ -31,9 +31,9 @@ namespace NewZealandWalksAPI.Controllers
             this.logger = logger;
         }
         // GET ALL REGIONS
-        // GET:https://localhost:portnumber/api/regionsDomain
+        // GET:https://localhost:portnumber/api/regions
         [HttpGet]
-        [Authorize(Roles = "Writer, Reader")]
+        //[Authorize(Roles = "Writer, Reader")]
         public async Task<IActionResult> GetAll()
         {
             /* Loggind different levels
@@ -45,7 +45,7 @@ namespace NewZealandWalksAPI.Controllers
             ///* Logging an Exception
             try
             {
-                throw new Exception("This is a custom exception.");
+                //throw new Exception("This is a custom exception.");
 
                 //Get Data From Database - Domain Models
                 var regionsDomain = await regionRepository.GetAllAsync();
@@ -78,7 +78,7 @@ namespace NewZealandWalksAPI.Controllers
         // GET:https://localhost:portnumber/api/regionsDomain/{id}
         [HttpGet]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid id) 
         {
             //var regionDomain = dbContext.Regions.Find(id);
@@ -97,7 +97,7 @@ namespace NewZealandWalksAPI.Controllers
         // POST:https://localhost:portnumber/api/regions
         [HttpPost]
         [ValidateModel]
-        [Authorize(Roles = "Writer")]
+        //[Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             // Map DTO to Domain Model
@@ -117,7 +117,7 @@ namespace NewZealandWalksAPI.Controllers
         [HttpPut]
         [Route("{id:Guid}")]
         [ValidateModel]
-        [Authorize(Roles = "Writer")]
+        //[Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto) 
         {
             // Map DTO to Domain Model
@@ -138,7 +138,7 @@ namespace NewZealandWalksAPI.Controllers
         // DELETE: htpp://localhost: portnumber/api/regions/{id}
         [HttpDelete]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Writer")]
+        //[Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id) 
         {
             var regionDomainModel = await regionRepository.DeleteAsync(id);
