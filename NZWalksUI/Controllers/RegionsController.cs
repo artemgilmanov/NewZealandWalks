@@ -36,7 +36,6 @@ namespace NZWalksUI.Controllers
             {
                 // log exception
             }
-          
 
             return View(responce);
         }
@@ -69,7 +68,21 @@ namespace NZWalksUI.Controllers
             }
 
             return View();
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id) 
+        {
+            var client = httpClientFactory.CreateClient();
+           
+            var response = await client.GetFromJsonAsync<RegionDto>($"http://localhost:5063/api/regions/{id.ToString()}");
+            
+            if (response is not null) 
+            {
+                return View(response);
+            }
+
+            return View(null);
         }
     }
 }
