@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NZWalksUI.Models;
 using NZWalksUI.Models.DTO;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 
@@ -83,6 +84,30 @@ namespace NZWalksUI.Controllers
             }
 
             return View(null);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(RegionDto request)
+        {
+            var client = httpClientFactory.CreateClient();
+            var httpRequestMessage = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Put,
+                RequestUri = new Uri($"http://localhost:5063/api/regions/{request.Id.ToString()}"),
+                Content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json")
+            };
+            var httpResponseMessage = await client.SendAsync(httpRequestMessage);
+
+            httpResponseMessage.EnsureSuccessStatusCode();
+            
+            var response = await httpResponseMessage.Content.ReadFromJsonAsync<RegionDto>();
+
+            if (response is not null)
+            {
+                return RedirectToAction("Edit", "Regions");
+            }
+
+            return View();
         }
     }
 }
