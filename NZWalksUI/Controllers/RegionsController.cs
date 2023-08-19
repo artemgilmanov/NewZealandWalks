@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NZWalksUI.Models;
 using NZWalksUI.Models.DTO;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 
@@ -108,6 +107,27 @@ namespace NZWalksUI.Controllers
             }
 
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(RegionDto request)
+        {
+            try
+            {
+                var client = httpClientFactory.CreateClient();
+
+                var httpResponseMessage = await client.DeleteAsync($"http://localhost:5063/api/regions/{request.Id.ToString()}");
+
+                httpResponseMessage.EnsureSuccessStatusCode();
+
+                return RedirectToAction("Index", "Regions");
+            }
+            catch (Exception ex)
+            {
+                // Console;
+            }
+
+            return View("Edit");
         }
     }
 }
